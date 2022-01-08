@@ -46,3 +46,28 @@ resource "aws_subnet" "bd-private-2" {
         Name = "BD"
     }
 }
+
+# Security Group
+
+resource "aws_security_group" "allow_remote_admin" {
+  name        = "allow_remote_admin"
+  description = "Allow ssh and RDP inbound traffic"
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 3389
+    to_port     = 3389
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "allow_remote_admin"
+  }
+}
