@@ -86,3 +86,42 @@ resource "aws_security_group" "allow_external_communication" {
     Name = "allow_external_comm"
   }
 }
+
+resource "aws_security_group" "allow_web" {
+  name        = "allow_web"
+  description = "Allow web traffic to server"
+
+  ingress {
+    from_port   = 80 
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "allow_web"
+  }
+}
+
+resource "aws_security_group" "allow_mysql_internal" {
+  name        = "allow_mysql_internal"
+  description = "Allow Mysql connexion from web server"
+
+  ingress {
+    from_port   = 3306
+    to_port     = 3306
+    protocol    = "tcp"
+    cidr_blocks = ["${aws_subnet.web-public-2a.cidr_block}"]
+  }
+
+  tags = {
+    Name = "allow_mysql_internal"
+  }
+}
