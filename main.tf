@@ -82,7 +82,7 @@ resource "aws_security_group" "allow_external_communication" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags {
+  tags = {
     Name = "allow_external_comm"
   }
 }
